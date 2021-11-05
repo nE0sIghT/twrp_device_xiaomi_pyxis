@@ -15,4 +15,7 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/omni_pyxis.mk
+    $(LOCAL_DIR)/twrp_pyxis.mk
+
+COMMON_LUNCH_CHOICES := \
+    twrp_pyxis-eng
