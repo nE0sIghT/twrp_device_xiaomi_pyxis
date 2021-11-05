@@ -28,36 +28,43 @@
  */
 
 #include <cstdlib>
+#include <fstream>
+#include <string>
 #include <unistd.h>
 #include <fcntl.h>
-#include <android-base/logging.h>
+
 #include <android-base/properties.h>
+#define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
+#include <sys/_system_properties.h>
 
+#include "vendor_init.h"
 #include "property_service.h"
-#include "log.h"
-#include <string>
-#include <fstream>
 
-using namespace std;
+void property_override(char const prop[], char const value[], bool add = true) {
+    auto pi = (prop_info *) __system_property_find(prop);
 
-namespace android {
-namespace init {
+    if (pi != nullptr) {
+        __system_property_update(pi, value, strlen(value));
+    } else if (add) {
+        __system_property_add(prop, strlen(prop), value, strlen(value));
+    }
+}
 
 void load_properties(const char *model) {
-    property_set("ro.product.name", model);
-    property_set("ro.build.product", model);
-    property_set("ro.product.device", model);
+    property_override("ro.product.name", model);
+    property_override("ro.build.product", model);
+    property_override("ro.product.device", model);
 }
 
 void vendor_load_properties() {
-    property_set("ro.bootimage.build.date.utc", "1546335651");
-    property_set("ro.build.date.utc", "1546335651");
+    property_override("ro.bootimage.build.date.utc", "1546335651");
+    property_override("ro.build.date.utc", "1546335651");
     const char* path = "/proc/meminfo";
     std::ifstream infile(path);
     std::string line;
     while (std::getline(infile, line))
     {
-        if (line.find("MemTotal:") != string::npos)
+        if (line.find("MemTotal:") != std::string::npos)
         {
             if (line.substr(17, 7) > "7000000") {
                 load_properties("vela");
@@ -72,6 +79,3 @@ void vendor_load_properties() {
     }
     infile.close();
 }
-
-}  // namespace init
-}  // namespace android
