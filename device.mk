@@ -63,6 +63,7 @@ TW_CUSTOM_CPU_TEMP_PATH := /sys/class/thermal/thermal_zone5/temp
 
 # Crypto
 TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_FBE := true
 PLATFORM_SECURITY_PATCH := 2099-12-31
 VENDOR_SECURITY_PATCH := 2099-12-31
 PLATFORM_VERSION := 16.1.0
@@ -70,6 +71,7 @@ PLATFORM_VERSION := 16.1.0
 TARGET_RECOVERY_DEVICE_MODULES += \
     libinit_pyxis \
     libandroidicu \
+    libdrm \
     libhardware_legacy \
     lincap \
     libdisplayconfig.qti \
@@ -85,6 +87,7 @@ TARGET_RECOVERY_DEVICE_MODULES += \
 RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.system.suspend@1.0.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libcap.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libdrm.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libhardware_legacy.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so \
