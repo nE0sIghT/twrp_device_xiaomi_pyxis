@@ -59,6 +59,7 @@ TW_NO_SCREEN_BLANK := true
 TW_NO_SCREEN_TIMEOUT := true
 TW_EXCLUDE_APEX := true
 TW_EXCLUDE_TWRPAPP := true
+TW_CUSTOM_CPU_TEMP_PATH := /sys/class/thermal/thermal_zone5/temp
 
 # Crypto
 TW_INCLUDE_CRYPTO := true
